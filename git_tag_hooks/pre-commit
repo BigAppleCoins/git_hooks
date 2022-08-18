@@ -1,5 +1,5 @@
 #!/bin/sh
-git tag --sort=-creatordate | sed '1d' | xargs git tag -d && git fetch origin
+git tag -l | xargs git tag -d && git fetch origin
 exit 0
 
 
