@@ -5,7 +5,7 @@ while read local_ref remote_ref; do
   this_match="/tags"
   if [[ $local_ref =~ $this_match ]]; then
     git tag --sort=-creatordate | sed '1d' | xargs git tag -d \
-     && git fetch
+#     && git fetch
      exit 0
   fi
 done
