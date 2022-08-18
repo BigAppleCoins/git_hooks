@@ -11,8 +11,8 @@ while read local_ref local_sha remote_ref remote_sha; do
   echo "local_ref==="$local_ref
   echo "remote_ref==="$remote_ref
   this_match="/tags"
-  if [[ $local_ref == .*$this_match.* ]]; then
-    ehco "包含tags"
+  if [[ $local_ref =~ $this_match ]]; then
+    git tag --sort=-creatordate | sed '1d' | xargs git tag -d && git fetch origin
   fi
 done
 
