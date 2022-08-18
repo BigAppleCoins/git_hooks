@@ -3,9 +3,6 @@
 remote="$1"
 url="$2"
 
-echo '===start==='
-
-
 while read local_ref local_sha remote_ref remote_sha; do
   echo "local_ref==="$local_ref
   echo "remote_ref==="$remote_ref
