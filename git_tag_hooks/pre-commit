@@ -1,8 +1,17 @@
 #!/bin/sh
-git tag -l | xargs git tag -d && git fetch origin
-exit 0
-
-
-
-
-
+echo 'pre-commit hooks starting...'
+remote_url=$(git config --local --list | grep -i 'remote.origin.url' | awk -F '=' '{print $2}')
+# shellcheck disable=SC2039
+if [[ $remote_url == http* ]]; then
+  exit 0
+fi
+git_addr=$(echo "$remote_url" | awk -F ':' '{print $1}')
+echo "git_addr:==""$git_addr"
+result=$(ssh -T -o ConnectTimeout=2 "$git_addr")
+echo "ssh execute result:==""$result"
+# shellcheck disable=SC2039
+if [[ $result =~ Welcome || $result =~ successful ]]; then
+  git tag -l | xargs git tag -d && git fetch origin
+  echo "fetch remote tags successfully!"
+  exit 0
+fi
